@@ -29,3 +29,14 @@ Because it's fun.
 - CUDA 2.4 (to make sure that the generation of an image doesn't last a couple of centuries :), it's advisable to use a GPU) 
 - JupyterLab
 
+## Usage
+To simplify the installation of dependencies, an environment.yaml file is provided. You can create a conda environment by running:
+```
+conda env create -f environment.yaml
+conda activate nst
+```
+This will ensure that all necessary packages and dependencies are correctly installed. However, be aware that this does not install the right CUDA drivers.
+
+Then you can simply run the notebook server with ```jupyter-lab``` open the notebook and start playing around.
+
+

@@ -30,12 +30,13 @@ Because it's fun.
 - JupyterLab
 
 ## Usage
-To simplify the installation of dependencies, an environment.yaml file is provided. You can create a conda environment by running:
+To simplify the installation of dependencies, an environment.yaml file is provided. This file should work both Windows and Linux systems. You can create a conda environment by running:
 ```
 conda env create -f environment.yaml
 conda activate nst
 ```
 This will ensure that all necessary packages and dependencies are correctly installed. However, be aware that this does not install the right CUDA drivers.
+If there would be an issue when importing torch or torchvision, one possible solution could be to uninstall both torch and torchvision and then install it again with the driver version of the system you are working on.
 
 Then you can simply run the notebook server with ```jupyter-lab``` open the notebook and start playing around.
 

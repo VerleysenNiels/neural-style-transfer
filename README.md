@@ -1,4 +1,4 @@
-# neural-style-transfer
+# Neural Style Transfer
 This repository contains an implementation of the Neural Style Transfer (NST) algorithm using PyTorch. Neural Style Transfer is a fascinating technique that applies the artistic style of one image to the content of another. I have been intrigued by this technique for some time, but had not taken the time yet to dive a bit deeper. So for this sideproject, I dived into this world by basing myself on the paper A Neural Algorithm of Artistic Style by Leon A. Gatys, Alexander S. Ecker, and Matthias Bethge and implementing the algorithm for myself. Right now only in a notebook, but the goal is to also put this into a small demo application.
 
 ## How it works

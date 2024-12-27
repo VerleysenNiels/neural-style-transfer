@@ -19,8 +19,7 @@ def calculate_loss(generated_content_feature_maps, content_feature_maps, generat
     # Looking at other implementations conv4_2 seems to be sufficient for the content loss
     content_loss = 0
     for content_features, generated_content_features in zip(content_feature_maps, generated_content_feature_maps):
-        content_loss += torch.nn.functional.mse_loss(
-            content_features, generated_content_features, reduction='mean')
+        content_loss += torch.nn.functional.mse_loss(content_features, generated_content_features, reduction='mean')
 
     # Average content loss across layers
     # content_loss /= len(content_features)

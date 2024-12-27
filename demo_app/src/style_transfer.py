@@ -6,7 +6,7 @@ from tqdm import tqdm
 from src.loss_functions import calculate_gram_matrix, calculate_loss
 
 
-def transfer_style(nst_model, content_image, style_image, device, learning_rate, alpha, beta, num_steps, content_image_mean, content_image_std):
+def transfer_style(nst_model, content_image, style_image, device, alpha, beta, learning_rate, num_steps, content_image_mean, content_image_std):
     """
     Transfers the style of a given style image onto a content image using neural style transfer.
 

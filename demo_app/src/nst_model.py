@@ -8,8 +8,7 @@ class NST_VGG(nn.Module):
         super().__init__()
         self.layer_content_idx = [21]
         self.layer_style_idx = [0, 5, 10, 19, 28]
-        self.model = models.vgg19(
-            weights=models.VGG19_Weights.IMAGENET1K_V1).features[:29]
+        self.model = models.vgg19(weights=models.VGG19_Weights.IMAGENET1K_V1).features[:29]
 
         # Freeze the model parameters
         for param in self.model.parameters():

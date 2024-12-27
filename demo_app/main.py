@@ -4,8 +4,16 @@ from PIL import Image
 from torchvision import transforms
 import matplotlib.pyplot as plt
 
+import gradio as gr
+
 from src.nst_model import NST_VGG
 from src.style_transfer import transfer_style
+
+# Get device and model in memory while the app is running
+# Set the device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# Create the NST model
+nst_model = NST_VGG().to(device)
 
 
 def denormalize_image(img, mean, std):
@@ -80,26 +88,7 @@ def plot_losses(content_losses, style_losses, total_losses):
 
     return Image.open(buf)
 
-def style_transfer_app(nst_model, content_image, style_image, device, alpha, beta, learning_rate, num_steps):    
-    # Perform style transfer
-    output_tensor, content_losses, style_losses, total_losses = transfer_style(
-        nst_model, content_image, style_image, device, alpha, beta, learning_rate, num_steps, content_image_mean, content_image_std
-    )
-
-    loss_plot = plot_losses(content_losses, style_losses, total_losses)
-    
-    return output_tensor, loss_plot
-
-
-if __name__ == "__main__":
-    # Define the content and style images
-    content_image_path = "examples/content_images/crete.JPG"
-    style_image_path = "examples/style_images/bob_ross.jpg"
-    
-    # Load the content and style images
-    content_image = Image.open(content_image_path)
-    style_image = Image.open(style_image_path)
-
+def style_transfer_app(content_image, style_image, alpha, beta, learning_rate, num_steps):
     # Convert images to RGB space as a safety measure depending on the input images
     content_image = content_image.convert("RGB")
     style_image = style_image.convert("RGB")
@@ -107,24 +96,34 @@ if __name__ == "__main__":
     # Define the mean and std for normalizing the images
     content_image_mean = torch.tensor([transforms.ToTensor()(content_image)[:, :, c].mean() for c in range(3)])
     content_image_std = torch.tensor([transforms.ToTensor()(content_image)[:, :, c].std() for c in range(3)])
-    
-    # Hyperparameters
-    num_steps = 100  # Number of optimization steps
-    learning_rate = 0.001 # Step size when optimizing
-    alpha = 1        # Weight for content loss
-    beta = 1000       # Weight for style loss
-    
-    # Set the device
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # Create the NST model
-    nst_model = NST_VGG().to(device)
-    
-    # Run the style transfer app
-    output_tensor, loss_plot = style_transfer_app(nst_model, content_image, style_image, device, alpha, beta, learning_rate, num_steps)
+    # Perform style transfer
+    output_tensor, content_losses, style_losses, total_losses = transfer_style(
+        nst_model, content_image, style_image, device, alpha, beta, learning_rate, num_steps, content_image_mean, content_image_std
+    )
 
     output_image = post_process_image(output_tensor, content_image_mean, content_image_std)
+    loss_plot = plot_losses(content_losses, style_losses, total_losses)
     
-    # Display the output image and loss plot
-    output_image.show()
-    loss_plot.show()
+    return output_image, loss_plot
+
+
+if __name__ == "__main__":
+    # Gradio interface
+    interface = gr.Interface(
+        fn=style_transfer_app,
+        inputs=[
+            gr.Image(type="pil"),
+            gr.Image(type="pil"),
+            gr.Slider(1, 10000, value=1, label="Alpha - Content Loss Weight"),
+            gr.Slider(1, 10000, value=1000, label="Beta - Style Loss Weight"),
+            gr.Slider(0.00001, 0.1, value=0.001, label="Learning Rate"),
+            gr.Slider(1, 5000, value=2000, label="Number of Steps")
+        ],
+        outputs=[gr.Image(type="pil"), gr.Image(type="pil")],
+        examples = [["examples/content_images/crete.JPG", "examples/style_images/bob_ross.jpg"]],
+        title="Neural Style Transfer Demo",
+        description="Upload a content image and a style image to apply neural style transfer. Tune the hyperparameters to steer the transfer process: alpha, beta, learning rate, and number of steps. Loss graphs will be shown."
+    )
+
+    interface.launch()

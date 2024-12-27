@@ -16,9 +16,24 @@ The optimization process is performed using gradient descent, iteratively updati
 Let's say you made a nice landscape picture while traveling and are wondering what it would look like if Bob Ross had painted this landscape. You take this picture and an image of a landscape painting by Bob Ross, and you let the algorithm go to work. Since you start from the content image, the content loss will rise a bit before converging. The style loss will start quite high and decrease until converging. At this point where the two losses converge, the process has found a balance between the content and style loss. By putting weights on these losses, you get some control over the generated image.
 
 So, for my case I took a nice drone picture in Crete and then use a painting from Bob Ross to transfer the style.
+![](examples/example_bob_ross.png)
+
+The loss curves look like the following, you can see the convergence of both the content and style loss forming the generated image:
+![](examples/example_losses.png)
 
 ### Some more examples
-Because it's fun.
+We can apply the style of Starry Night on the same content image.
+![](examples/generated_images/final_image_07a87bbf13e54744b5383b8ad004422a.png)
+
+Or we can make it into an oil painting.
+![](examples/generated_images/final_image_4fe5e88772f64cef98367a027291f8e1.png)
+
+We can also take other content images and apply whatever style we want.
+
+![](examples/generated_images/final_image_ad49ab69c2544f29a7e92f5d9da8bc83.png)
+![](examples/generated_images/final_image_42cd31378a3144c18028ffe178ccf892.png)
+![](examples/generated_images/final_image_fe923db01c0f4229a47c8b047afa842f.png)
+![](examples/generated_images/final_image_d71d3609cc7b484cb9e368b1df21079d.png)
 
 
 ## Requirements 

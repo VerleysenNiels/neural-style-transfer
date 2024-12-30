@@ -123,7 +123,7 @@ if __name__ == "__main__":
         outputs=[gr.Image(type="pil"), gr.Image(type="pil")],
         examples = [["examples/content_images/crete.JPG", "examples/style_images/bob_ross.jpg"]],
         title="Neural Style Transfer Demo",
-        description="Upload a content image and a style image to apply neural style transfer. Tune the hyperparameters to steer the transfer process: alpha, beta, learning rate, and number of steps. Loss graphs will be shown."
+        description="🎨 Transform your photos into artwork by blending a content image with a style image using neural networks. Upload your images, and the app will apply the style to the content, creating a unique result.\nAdjust hyperparameters like alpha (content weight), beta (style weight), learning rate, and steps to refine the output. Once the process is complete, loss graphs will show how the generated image evolved during the transfer. \n\n✨ Upload your images and let creativity take over!"
     )
 
     interface.launch()

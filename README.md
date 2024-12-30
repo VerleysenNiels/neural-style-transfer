@@ -35,6 +35,10 @@ We can also take other content images and apply whatever style we want.
 ![](examples/generated_images/final_image_fe923db01c0f4229a47c8b047afa842f.png)
 ![](examples/generated_images/final_image_d71d3609cc7b484cb9e368b1df21079d.png)
 
+## Demo App
+To make playing around with neural style transfer a bit more straightforward, I created a small demo application using Gradio. It allows you to select a content and style image, as well as the hyperparameters for the generation process. When an image is generated, the app shows both the generated image and the loss curves of the generation process itself.
+
+![](examples/demo_app.gif)
 
 ## Requirements 
 - Python 3.11.10
@@ -42,7 +46,8 @@ We can also take other content images and apply whatever style we want.
 - Matplotlib (for plotting images and training curves in the notebook)
 - tqdm   
 - CUDA 2.4 (to make sure that the generation of an image doesn't last a couple of centuries :), it's advisable to use a GPU) 
-- JupyterLab
+- JupyterLab (or similar for running the notebook)
+- Gradio (for running the demo app)
 
 ## Usage
 To simplify the installation of dependencies, an environment.yaml file is provided. This file should work both Windows and Linux systems. You can create a conda environment by running:
@@ -54,5 +59,7 @@ This will ensure that all necessary packages and dependencies are correctly inst
 If there would be an issue when importing torch or torchvision, one possible solution could be to uninstall both torch and torchvision and then install it again with the driver version of the system you are working on.
 
 Then you can simply run the notebook server with ```jupyter-lab``` open the notebook and start playing around.
+
+Or you can start the demo app with ```python demo_app/main.py```
 
 
